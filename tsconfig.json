@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "moduleResolution": "nodenext",
+        "module": "NodeNext",
+        "outDir": "compiled",
+        "rootDir": "src"
+    
+    },
+    "include": ["src"],
+    "exclude": ["node_modules"]
+}
