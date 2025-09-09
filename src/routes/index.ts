@@ -9,6 +9,7 @@ import {
   unLikePost,
   seePost,
   getAllComentsFromPost,
+  getAllPosts,
   allNotificationsFromUserRead,
   addComment,
 } from '../feed/index.controllers.js';
@@ -37,7 +38,7 @@ const startServer = () => {
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['content-type', 'token'],
   });
-  app.addHook('onRequest', checkUserAuthorization);
+  // app.addHook('onRequest', checkUserAuthorization);
   app.post('/api/v1/register', register);
   app.post('/api/v1/login', login);
   app.post('/api/v1/users/follow', followUser);
@@ -47,13 +48,14 @@ const startServer = () => {
   app.post('/api/v1/users/search', search);
   app.get('/api/v1/users/profile/', profileView);
   app.get('/api/v1/users/notifications', getNotifications);
-  app.put('/api/v1/users/notifications/allRead', allNotificationsFromUserRead);
+  app.post('/api/v1/users/notifications/allRead', allNotificationsFromUserRead);
   app.delete('/api/v1/users/', deleteUsersFromSystem);
   app.post('/api/v1/post', postContent);
   app.post('/api/v1/post/like', likePost);
   app.post('/api/v1/post/unlike', unLikePost);
   app.get('/api/v1/post/view', seePost);
-  app.put('/api/v1/profile/updateName', updateName);
+  app.post('/api/v1/post/allFromUser', getAllPosts);
+  app.post('/api/v1/profile/updateName', updateName);
   app.delete('/api/v1/posts/', deletePost);
   app.get('/api/v1/comments/', getAllComentsFromPost);
   app.post('/api/comment/', addComment);

@@ -36,8 +36,6 @@ export const postStory = async (post: {
     const postModel = {
       authorId: post.authorId,
       content: post.content,
-      likesNumber: 0,
-      commentsNumber: 0,
     };
 
     await insertPostsTable.values(postModel).execute();
@@ -52,7 +50,7 @@ export const postStory = async (post: {
 export const postComment = async (comment: commentSchema) => {
   const commentsTable = database.insertInto('comments');
   const postsTable = database.selectFrom('posts');
-  const givenPost = await postsTable.where('postId', '=', '').selectAll().executeTakeFirst();
+  const givenPost = await postsTable.where('postId', '=', comment.postId).selectAll().executeTakeFirst();
 
   if (givenPost) {
     const commentModel = {
@@ -222,14 +220,14 @@ export const likeAPost = async (postId: string, userId: string) => {
 
   const notificationsInsertTable = database.insertInto('notifications');
 
-  const updateLikesTable = postsLikesInsertTable
+  const updateLikesTable =  postsLikesInsertTable
     .values({
       postId: postId,
       likerId: userId,
     })
     .execute();
 
-  const updateNofificationsTable = notificationsInsertTable
+  const updateNofificationsTable =  notificationsInsertTable
     .values([
       {
         userId: postInfo.authorId,
@@ -239,7 +237,7 @@ export const likeAPost = async (postId: string, userId: string) => {
     ])
     .execute();
 
-  Promise.all([updateLikesTable, updateNofificationsTable]);
+  await Promise.all([updateLikesTable, updateNofificationsTable]);
 
   return {
     success: true,
@@ -301,6 +299,6 @@ export const unlikeAPost = async (postId: string, userId: string) => {
 
   return {
     success: true,
-    message: 'Post deleted successfully!',
+    message: 'Post unliked successfully!',
   };
 };

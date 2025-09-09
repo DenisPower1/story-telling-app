@@ -52,6 +52,10 @@ export const updateUserMame = async (userId: string, newName: { first: string; l
       message: `Your new name is ${newName.first} ${newName.last}`,
     };
   }
+  return {
+    success: false,
+    message: "Something really bad happened, contact the support team."
+  }
 };
 
 export const viewProfile = async (targetUserId: string, viewerId?: string) => {

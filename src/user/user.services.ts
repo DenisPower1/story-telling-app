@@ -2,7 +2,7 @@ import { sql } from 'kysely';
 import database from '../config/db.js';
 import type { userSchema as userInterface } from '../config/schemas.js';
 import { createToken } from '../utils/token.js';
-import { isSamePassWord } from '../utils/password.js';
+import { encryptPassWord, isSamePassWord } from '../utils/password.js';
 
 export const registerUser = async (user: userInterface) => {
   const { name, email, password, gender, country, birthDate } = user;
@@ -12,6 +12,7 @@ export const registerUser = async (user: userInterface) => {
     .where('email', '=', email)
     .selectAll()
     .executeTakeFirst();
+  const encriptedPassWord = await encryptPassWord(password);
 
   if (givenUserByEmail) {
     return {
@@ -23,7 +24,7 @@ export const registerUser = async (user: userInterface) => {
   const insertedUser = database.insertInto('users').values({
     name: name,
     email: email,
-    password: password,
+    password: encriptedPassWord,
     gender: gender,
     country: country,
     birthDate: birthDate,
@@ -48,8 +49,8 @@ export const logUser = async (user: { email: string; password: string }) => {
     .executeTakeFirst();
 
   if (givenUser) {
-    const samePassWord = isSamePassWord(user.password, givenUser.password);
-
+    const samePassWord = await isSamePassWord(user.password, givenUser.password);
+console.log(samePassWord)
     if (samePassWord) {
       const loggedUser = await userTable
         .where('email', '=', user.email)

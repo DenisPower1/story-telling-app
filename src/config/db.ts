@@ -9,6 +9,7 @@ import { up as createNotificationsTable } from './migrations/notifications.js';
 import { up as createReportedPostsTable } from './migrations/reportedposts.js';
 import { up as createPostsLikesTable } from './migrations/postslikes.js';
 import { up as createFollowsTable } from './migrations/follows.js';
+import { up as createTokensTable } from './migrations/tokens.js';
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ Promise.all([
   createReportedPostsTable(database),
   createPostsLikesTable(database),
   createFollowsTable(database),
+  createTokensTable(database),
 ]);
 
 export default database;

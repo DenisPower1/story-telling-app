@@ -26,9 +26,9 @@ export const register = async (req: FastifyRequest, reply: FastifyReply) => {
     password,
   } = user;
 
-  const genders = new Set(['Male', 'Female']);
+  const genders = new Set(['male', 'female']);
   const invalidData =
-    isEmpty(first) || isEmpty(last) || !isEmail(email) || !genders.has(gender) || isEmpty(country);
+    isEmpty(first) || isEmpty(last) || !isEmail(email) || !genders.has(gender.toLowerCase()) || isEmpty(country);
   const notStrongPassWord = !isStrongPassword(password, {
     minLength: 8,
     minNumbers: 2,

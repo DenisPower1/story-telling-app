@@ -1,7 +1,7 @@
 import { compare, hash, getSalt } from 'bcryptjs';
 
 export const encryptPassWord = async (unhasedPassWord: string) => {
-  const salt = getSalt('');
+  const salt = getSalt('60');
 
   return await hash(unhasedPassWord, salt);
 };

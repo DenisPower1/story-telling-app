@@ -11,7 +11,7 @@ export const verifyToken = async (token: string) => {
   const tokensTable = database.selectFrom('tokens');
   const deleteTokensTable = database.deleteFrom('tokens');
   const retrievedDoc = await tokensTable.where('token', '=', token).selectAll().executeTakeFirst();
-  const givenToken = retrievedDoc.token;
+  const givenToken = retrievedDoc?.token;
 
   if (givenToken) {
     try {

@@ -138,7 +138,7 @@ export const findPosts = async (req: FastifyRequest, reply: FastifyReply) => {
 };
 
 export const getNotifications = async (req: FastifyRequest, reply: FastifyReply) => {
-  const queryValue = (req.query as { userId: string }).userId;
+  const queryValue = (req.query as { userid: string }).userid;
 
   if (isEmpty(queryValue) || queryValue === void 0) {
     reply.status(400).send({
@@ -152,7 +152,7 @@ export const getNotifications = async (req: FastifyRequest, reply: FastifyReply)
 };
 
 export const getUserRecommendations = async (req: FastifyRequest, reply: FastifyReply) => {
-  const queryValue = (req.query as { userId: string }).userId;
+  const queryValue = (req.query as { userid: string }).userid;
 
   if (isEmpty(queryValue) || queryValue == void 0) {
     reply.status(400).send({
@@ -186,10 +186,10 @@ export const allNotificationsFromUserRead = async (req: FastifyRequest, reply: F
 };
 
 export const seePost = async (req: FastifyRequest, reply: FastifyReply) => {
-  const body = req.query as { viewerId: string; postId: string };
-  const { viewerId, postId } = body;
+  const body = req.query as { viewerid: string; postid: string };
+  const { viewerid, postid } = body;
 
-  const answer = await viewPost(postId, viewerId);
+  const answer = await viewPost(postid, viewerid);
   const status = answer.success ? 200 : 500;
   reply.status(status).send(answer);
 };
@@ -231,7 +231,7 @@ export const unLikePost = async (req: FastifyRequest, reply: FastifyReply) => {
 };
 
 export const getAllComentsFromPost = async (req: FastifyRequest, reply: FastifyReply) => {
-  const queryValue = (req.query as { postId: string }).postId;
+  const queryValue = (req.query as { postid: string }).postid;
   if (isEmpty(queryValue) || queryValue == void 0) {
     reply.status(400).send({
       success: false,
